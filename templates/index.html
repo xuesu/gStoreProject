@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>gStore Simplest Trial</title>
+</head>
+<body>
+<form method="POST" action="/main">
+    {% csrf_token %}
+    <div>
+        <button onclick="submit()">搜索</button>
+        <input id="name" name="name"/>
+        <select id="res_type" name="res_type">
+            <option value="Single">单曲</option>
+            <option value="Album">唱片</option>
+        </select>
+    </div>
+    <div>
+        流派
+        <select id="genre" name="genre">
+            {% for genre in genre_list %}
+            <option value="{{genre.uri}}">{{genre.name}}</option>
+            {% endfor %}
+        </select>
+    </div>
+</form>
+<div id="result_list">
+    <table>
+        <thead>
+            <th>类型</th>
+            <th>名称</th>
+        </thead>
+    {% for result in result_list %}
+        <tr onclick="document.getElementById('detail_iframe').src='detail?uri=<{{result.uri}}>';">
+            <td>
+                {{result.res_type}}
+            </td>
+            <td>
+                {{result.name}}
+            </td>
+        </tr>
+    {% endfor %}
+    </table>
+</div>
+<iframe id="detail_iframe" src="/" style=" width:  100%; height:800px">
+  <p>Your browser does not support iframes.</p>
+</iframe>
+
+</body>
+</html>
